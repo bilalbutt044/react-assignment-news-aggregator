@@ -2,7 +2,7 @@ import { getDateWithoutDashes } from "../utils";
 
 
 const api = {
-  getNewYourTimesArticles: async ({ query, startDate, endDate }) => {
+  getNewYourTimesArticles: async ({ query = "", startDate = "", endDate = "" } = {}) => {
     try {
       const beginDate = getDateWithoutDashes(startDate);
       const toDate = getDateWithoutDashes(endDate);
@@ -11,31 +11,35 @@ const api = {
       const res = await fetch(url);
       const data = await res.json();
       return data
-      // when rate limit exceeds , we get error here
-      if (!data?.fault) {
-        const results = data?.response?.docs?.map((item) => ({
-          ...item,
-          publishedAt: item?.pub_date,
-          description: item?.lead_paragraph,
-          author: item?.byline?.original,
-          title: item?.headline?.main,
-        }));
-        const authors = getAuthors(data?.response?.results, "tags.[0].webTitle");
-
-        if (!startDate && !endDate)
-          return setState((prev) => ({
-            ...prev,
-            articles: [...prev.articles, ...results],
-            sources: [...prev.sources, "New Your TImes"],
-          }));
-        setState((prev) => ({
-          ...prev,
-          articles: [...results],
-          sources: [...prev.sources, "New Your TImes"],
-        }));
-      }
     } catch (error) {
       console.log("error in new york times api", error);
+    }
+  },
+  getGuadianArticles: async ({ query = "", startDate = "", endDate = "" } = {}) => {
+    try {
+      var url = `https://content.guardianapis.com/search?q=${query}${startDate ? `&from-date=${startDate}` : ""}${endDate ? `&to-date=${endDate}` : ""
+        }&show-tags=contributor&api-key=18e0677c-4348-4c45-a357-a29a2eb04911`;
+      const res = await fetch(url);
+      const data = await res.json();
+      return data
+    } catch (error) {
+
+    }
+  },
+  getNewApiArticles: async ({ query = "", startDate = "", endDate = "" } = {}) => {
+    try {
+      var url =
+        "https://newsapi.org/v2/everything?" +
+        `q=${query}&` +
+        `${startDate ? `from=${startDate}&` : ""}` +
+        `${endDate ? `to=${endDate}&` : ""}` +
+        "sortBy=popularity&" +
+        "apiKey=4879cb53518145099b220a86f4aa3f20";
+      const res = await fetch(url);
+      const data = await res.json();
+      return data
+    } catch (error) {
+
     }
   }
 }

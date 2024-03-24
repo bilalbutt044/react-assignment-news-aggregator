@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Search = ({ value = "" }) => {
+const Search = ({ value = "", handleSearch }) => {
   const [query, setQuery] = useState(value);
   return (
     <div className="flex flex-wrap justify-center mt-10 items-center mx-auto">
@@ -13,7 +13,7 @@ const Search = ({ value = "" }) => {
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search article"
       />
-      <Link to={`/search?q=${query}`}>
+      <Link onClick={handleSearch} to={`/search?q=${query}`}>
         <a className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</a>
       </Link>
     </div>
