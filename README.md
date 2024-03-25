@@ -7,6 +7,10 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
+# NOTE:
+
+Ideadlly github repo should not contains .env file but i have pushed it so interviewer can run this repo locally.
+
 # Running React Vite Application in Docker Container
 
 This guide provides step-by-step instructions on how to run a React Vite application in a Docker container.
@@ -26,7 +30,23 @@ If you haven't already installed Docker on your system, follow the installation 
 - For macOS: [Install Docker Desktop on macOS](https://docs.docker.com/desktop/install/mac-install/)
 - For Linux: [Install Docker Engine on Linux](https://docs.docker.com/engine/install/)
 
-## Usage
+## Using Docker Image from Docker Hub
+
+If you prefer to use the Docker image from Docker Hub, you can pull it using the following command:
+
+```docker pull bilal044/react-assignment:latest
+
+```
+
+## Run Docker Container:
+
+Once the image is pulled successfully, you can run a Docker container based on this image using the following command:
+
+```docker run -it -p 3000:3000 bilal044/react-assignment:latest
+
+```
+
+## build and run docker image locally
 
 ### 1. Update Vite Configuration
 
